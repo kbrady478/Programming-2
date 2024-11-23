@@ -1,18 +1,19 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class in_Loadout : MonoBehaviour
 {
-    private GameObject hold_Point;
+    [SerializeField] private GameObject equip_Point;
     private GameObject equipable_Container;
     private GameObject player_Controller;
     public bool within_Loadout;
     
     void Start()
     {
-        hold_Point = GameObject.FindGameObjectWithTag("Hold Point");    
         equipable_Container = GameObject.FindGameObjectWithTag("Equipable Container");
         player_Controller = GameObject.FindGameObjectWithTag("Player");
+        Change_Loadout_Status();
     }
 
     private void Update()
@@ -28,11 +29,11 @@ public class in_Loadout : MonoBehaviour
     {
         if (within_Loadout == true)
         {
-            gameObject.transform.parent = hold_Point.transform;
-            gameObject.transform.position = hold_Point.transform.position;
+            gameObject.transform.parent = equip_Point.transform;
+            gameObject.transform.position = equip_Point.transform.position;
             
-            // Must subtract 45 from the Y to ensure it is facing the correct direction w/ Iso view
-            gameObject.transform.rotation = Quaternion.Euler(player_Controller.transform.rotation.x, player_Controller.transform.rotation.y - 45, player_Controller.transform.rotation.z);
+            
+            gameObject.transform.rotation = Quaternion.Euler(0,-player_Controller.transform.rotation.eulerAngles.y,0);
         }
         if (within_Loadout == false)
         {
