@@ -3,18 +3,32 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class Player_Movement : MonoBehaviour
 {
     [Header("General")]
     [SerializeField] private Rigidbody rb;
     private InputSystem_Actions input_System;
+    private Vector3 input_Vector;
     
     [Header("Walk Speeds")]
     [SerializeField] private float walk_Speed;
     [SerializeField] private float turn_Speed;
-   
-    private Vector3 input_Vector;
+    
+    [Header("Jumping")] 
+    [SerializeField] private float jump_Force;
+    
+    [Header("Ground Check")]
+    [SerializeField] private LayerMask ground_Layer;
+    [SerializeField] private Transform ground_Check_Pos;
+    [SerializeField] private float ground_Check_Radius;
+    [SerializeField] private float jump_Cooldown;
+    
+    [Header("Bool Checks - Exposed for viewing")]
+    [SerializeField] private bool is_Jumping;
+    [SerializeField] private bool is_Grounded = false;
+    [SerializeField] private bool can_Jump = true;
     
     
     #region --- Input System Setup ---
@@ -35,27 +49,29 @@ public class Player_Movement : MonoBehaviour
     }
     
     #endregion
-
-    #region --- Basic Updates ---
     
-    private void Update()
-    {
-        Take_Input();
-        Rotate_Character();
-    }// end Update()
-
+    
     private void FixedUpdate()
     {
+        is_Grounded = Physics.CheckSphere(ground_Check_Pos.position, ground_Check_Radius, ground_Layer);
+        
+        if (is_Jumping && is_Grounded && can_Jump)
+            is_Jumping = false;
+        
+        Take_Input();
+
+        if (is_Jumping) return;
+        Rotate_Character();      
         Move_Character();
     }// end FixedUpdate()
-
-    #endregion
+    
     
     private void Take_Input()
     {
         input_Vector = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")); 
     }// end Take_Input()
 
+    
     private void Rotate_Character()
     {
         if (input_Vector == Vector3.zero) return;
@@ -71,6 +87,7 @@ public class Player_Movement : MonoBehaviour
         transform.rotation = Quaternion.RotateTowards(transform.rotation, current_Rotation, turn_Speed * Time.deltaTime );
     }// end Rotate_Character
     
+    
     private void Move_Character()
     {
         Vector3 direction = input_Vector.normalized;
@@ -78,5 +95,24 @@ public class Player_Movement : MonoBehaviour
         rb.MovePosition(rb.position + transform.forward * direction.magnitude * walk_Speed * Time.fixedDeltaTime);
     }// end Move_Character
     
+    
+    public void OnJump()
+    {
+        if (is_Grounded == false || can_Jump == false) return;
+
+        is_Jumping = true;
+        can_Jump = false;
+        
+        Invoke("Reset_Jump", jump_Cooldown);
+        
+        rb.AddForce(jump_Force * Vector3.up, ForceMode.Impulse);
+        rb.AddForce((jump_Force * 1.5f) * gameObject.transform.forward, ForceMode.Impulse);
+    }// end OnJump()
+
+    
+    private void Reset_Jump()
+    {
+        can_Jump = true;
+    }// end Reset_Jump()
     
 }// end script
