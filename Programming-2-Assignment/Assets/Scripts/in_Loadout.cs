@@ -4,7 +4,7 @@ using UnityEngine.Serialization;
 
 public class in_Loadout : MonoBehaviour
 {
-    [SerializeField] private GameObject equip_Point;
+    private GameObject equip_Point;
     private GameObject equipable_Container;
     private GameObject player_Controller;
     public bool within_Loadout;
@@ -13,6 +13,10 @@ public class in_Loadout : MonoBehaviour
     {
         equipable_Container = GameObject.FindGameObjectWithTag("Equipable Container");
         player_Controller = GameObject.FindGameObjectWithTag("Player");
+        
+        if (gameObject.tag == "Holdable")
+            equip_Point = GameObject.FindGameObjectWithTag("Hold Point");
+            
         Change_Loadout_Status();
     }
 
