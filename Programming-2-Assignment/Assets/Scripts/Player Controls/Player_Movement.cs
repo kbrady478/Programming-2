@@ -7,7 +7,8 @@ using UnityEngine.Serialization;
 
 public class Player_Movement : MonoBehaviour
 {
-    [Header("General")]
+    [Header("General")] 
+    [SerializeField] private Input_Manager input_Manager;
     [SerializeField] private Rigidbody rb;
     private InputSystem_Actions input_System;
     private Vector3 input_Vector;
@@ -31,7 +32,7 @@ public class Player_Movement : MonoBehaviour
     [SerializeField] private bool can_Jump = true;
     
     
-    #region --- Input System Setup ---
+    #region --- Input System ---
     
     private void Awake()
     {
@@ -48,6 +49,11 @@ public class Player_Movement : MonoBehaviour
         input_System.Player.Disable();
     }
     
+    private void Take_Input()
+    {
+        input_Vector = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")); 
+    }// end Take_Input()    
+    
     #endregion
     
     
@@ -55,45 +61,78 @@ public class Player_Movement : MonoBehaviour
     {
         is_Grounded = Physics.CheckSphere(ground_Check_Pos.position, ground_Check_Radius, ground_Layer);
         
+        // Reset jump
         if (is_Jumping && is_Grounded && can_Jump)
             is_Jumping = false;
         
         Take_Input();
 
+        // Restrict movement in jumping, will make more sense with animation later
         if (is_Jumping) return;
-        Rotate_Character();      
-        Move_Character();
+        
+        // Rotate character with movement direction when not in combat
+        if (input_Manager.combat_Mode == false)
+        {
+            Rotate_Character_With_Movement();
+            Move_Character_With_Rotation();
+        }    
+        // else aim at cursor 
+        else if (input_Manager.combat_Mode == true)
+        {
+            Rotate_Character_With_Aim(input_Manager.cursor_Position);
+            Move_Character_With_Aim();
+        }
+        
     }// end FixedUpdate()
     
-    
-    private void Take_Input()
-    {
-        input_Vector = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")); 
-    }// end Take_Input()
-
-    
-    private void Rotate_Character()
-    {
-        if (input_Vector == Vector3.zero) return;
-        
-        // For changing the movement so that forward is up on screen, in line with Iso angle
-        var matrix = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
-        
-        // Input influenced by rotation matrix
-        var skewed_Input = matrix.MultiplyPoint3x4(input_Vector);
-        
-        
-        var current_Rotation = Quaternion.LookRotation(skewed_Input, Vector3.up);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, current_Rotation, turn_Speed * Time.deltaTime );
-    }// end Rotate_Character
-    
-    
-    private void Move_Character()
+    #region --- Character Movement - Looting Mode ---
+    private void Move_Character_With_Rotation()
     {
         Vector3 direction = input_Vector.normalized;
         
         rb.MovePosition(rb.position + transform.forward * direction.magnitude * walk_Speed * Time.fixedDeltaTime);
-    }// end Move_Character
+    }// end Move_Character_With_Rotation()    
+    
+    
+    private void Rotate_Character_With_Movement()
+    {
+        if (input_Vector == Vector3.zero) return;
+        
+        // For changing the movement so that forward is up on screen, in line with Iso angle
+        Matrix4x4 matrix = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
+        
+        // Input influenced by rotation matrix
+        Vector3 skewed_Input = matrix.MultiplyPoint3x4(input_Vector);
+        
+        
+        Quaternion current_Rotation = Quaternion.LookRotation(skewed_Input, Vector3.up);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, current_Rotation, turn_Speed * Time.deltaTime );
+    }// end Rotate_Character_With_Movement()
+    #endregion
+
+    
+    #region --- Character Movement - Combat Mode ---
+    private void Move_Character_With_Aim()
+    {
+        Vector3 moveUp = new Vector3(1, 0, 1).normalized;
+        if (Input.GetKey(KeyCode.W))
+            rb.MovePosition(rb.position + moveUp * walk_Speed * Time.fixedDeltaTime);
+        Vector3 moveDown = new Vector3(-1, 0, -1).normalized;
+        if (Input.GetKey(KeyCode.S))
+            rb.MovePosition(rb.position + moveDown * walk_Speed * Time.fixedDeltaTime);
+        Vector3 moveLeft = new Vector3(-1, 0, 1).normalized;
+        if (Input.GetKey(KeyCode.A))
+            rb.MovePosition(rb.position + moveLeft * walk_Speed * Time.fixedDeltaTime);
+        Vector3 moveRight = new Vector3(1, 0, -1).normalized; 
+        if (Input.GetKey(KeyCode.D))
+            rb.MovePosition(rb.position + moveRight * walk_Speed * Time.fixedDeltaTime);
+    }// end Move_Character_With_Aim()
+    
+    private void Rotate_Character_With_Aim(Vector3 target)
+    {
+        gameObject.transform.LookAt(target);
+    }// end Rotate_Character_With_Aim
+    #endregion
     
     
     public void OnJump()
