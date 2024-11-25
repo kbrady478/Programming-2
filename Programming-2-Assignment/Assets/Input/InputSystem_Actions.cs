@@ -125,6 +125,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Enter Limb Selection"",
+                    ""type"": ""Button"",
+                    ""id"": ""217c3047-0c2a-4806-b006-1686aeeb84eb"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -523,6 +532,28 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""action"": ""Change Mode"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""17664fab-a58d-4b3d-ba11-25b5a7553922"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Enter Limb Selection"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0bb6040b-0776-456b-a915-e38e38757787"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Enter Limb Selection"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -624,6 +655,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": ""Exit Inventory"",
                     ""type"": ""Button"",
                     ""id"": ""cbbb96f4-1c31-4542-9e2a-751abf9fef00"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Exit Limb Selection"",
+                    ""type"": ""Button"",
+                    ""id"": ""4c0a0cdd-ac1d-4164-98bf-a1512aba8a1b"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -1015,6 +1055,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""action"": ""Exit Inventory"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""36c114c2-c24f-43b6-8d9a-1378346d0bb2"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Exit Limb Selection"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1095,6 +1146,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_EnterInventory = m_Player.FindAction("Enter Inventory", throwIfNotFound: true);
         m_Player_ChangeMode = m_Player.FindAction("Change Mode", throwIfNotFound: true);
+        m_Player_EnterLimbSelection = m_Player.FindAction("Enter Limb Selection", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1108,6 +1160,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
         m_UI_ExitInventory = m_UI.FindAction("Exit Inventory", throwIfNotFound: true);
+        m_UI_ExitLimbSelection = m_UI.FindAction("Exit Limb Selection", throwIfNotFound: true);
     }
 
     ~@InputSystem_Actions()
@@ -1186,6 +1239,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_EnterInventory;
     private readonly InputAction m_Player_ChangeMode;
+    private readonly InputAction m_Player_EnterLimbSelection;
     public struct PlayerActions
     {
         private @InputSystem_Actions m_Wrapper;
@@ -1201,6 +1255,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         public InputAction @EnterInventory => m_Wrapper.m_Player_EnterInventory;
         public InputAction @ChangeMode => m_Wrapper.m_Player_ChangeMode;
+        public InputAction @EnterLimbSelection => m_Wrapper.m_Player_EnterLimbSelection;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1243,6 +1298,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @ChangeMode.started += instance.OnChangeMode;
             @ChangeMode.performed += instance.OnChangeMode;
             @ChangeMode.canceled += instance.OnChangeMode;
+            @EnterLimbSelection.started += instance.OnEnterLimbSelection;
+            @EnterLimbSelection.performed += instance.OnEnterLimbSelection;
+            @EnterLimbSelection.canceled += instance.OnEnterLimbSelection;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1280,6 +1338,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @ChangeMode.started -= instance.OnChangeMode;
             @ChangeMode.performed -= instance.OnChangeMode;
             @ChangeMode.canceled -= instance.OnChangeMode;
+            @EnterLimbSelection.started -= instance.OnEnterLimbSelection;
+            @EnterLimbSelection.performed -= instance.OnEnterLimbSelection;
+            @EnterLimbSelection.canceled -= instance.OnEnterLimbSelection;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1312,6 +1373,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_TrackedDevicePosition;
     private readonly InputAction m_UI_TrackedDeviceOrientation;
     private readonly InputAction m_UI_ExitInventory;
+    private readonly InputAction m_UI_ExitLimbSelection;
     public struct UIActions
     {
         private @InputSystem_Actions m_Wrapper;
@@ -1327,6 +1389,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         public InputAction @TrackedDevicePosition => m_Wrapper.m_UI_TrackedDevicePosition;
         public InputAction @TrackedDeviceOrientation => m_Wrapper.m_UI_TrackedDeviceOrientation;
         public InputAction @ExitInventory => m_Wrapper.m_UI_ExitInventory;
+        public InputAction @ExitLimbSelection => m_Wrapper.m_UI_ExitLimbSelection;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1369,6 +1432,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @ExitInventory.started += instance.OnExitInventory;
             @ExitInventory.performed += instance.OnExitInventory;
             @ExitInventory.canceled += instance.OnExitInventory;
+            @ExitLimbSelection.started += instance.OnExitLimbSelection;
+            @ExitLimbSelection.performed += instance.OnExitLimbSelection;
+            @ExitLimbSelection.canceled += instance.OnExitLimbSelection;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -1406,6 +1472,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @ExitInventory.started -= instance.OnExitInventory;
             @ExitInventory.performed -= instance.OnExitInventory;
             @ExitInventory.canceled -= instance.OnExitInventory;
+            @ExitLimbSelection.started -= instance.OnExitLimbSelection;
+            @ExitLimbSelection.performed -= instance.OnExitLimbSelection;
+            @ExitLimbSelection.canceled -= instance.OnExitLimbSelection;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -1481,6 +1550,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         void OnSprint(InputAction.CallbackContext context);
         void OnEnterInventory(InputAction.CallbackContext context);
         void OnChangeMode(InputAction.CallbackContext context);
+        void OnEnterLimbSelection(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
@@ -1495,5 +1565,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         void OnTrackedDevicePosition(InputAction.CallbackContext context);
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
         void OnExitInventory(InputAction.CallbackContext context);
+        void OnExitLimbSelection(InputAction.CallbackContext context);
     }
 }

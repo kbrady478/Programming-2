@@ -7,10 +7,16 @@ TagManager:
   - Inventory
   - World Item Container
   - Removed Item Dispenser
-  - Equipable Container
-  - Hold Point
-  - Holdable
+  - Limb Selector
+  - Body - Head
+  - Body - Torso
+  - Body - Right Arm
+  - Body - Left Arm
+  - Body - Right Leg
+  - Body - Left Leg
   - Metal Scrap
+  - Holdable
+  - Hold Point
   layers:
   - Default
   - TransparentFX

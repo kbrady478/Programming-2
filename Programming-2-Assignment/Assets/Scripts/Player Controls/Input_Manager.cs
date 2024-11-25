@@ -11,6 +11,7 @@ public class Input_Manager : MonoBehaviour
     private InputActionMap ui_Action_Map;
 
     [SerializeField] private GameObject inventory_Screen;
+    [SerializeField] private GameObject limb_Selection_Screen;
 
     [Header("Play Modes - Combat/Looting")] 
     [SerializeField] private LayerMask loot_Layer;
@@ -70,6 +71,24 @@ public class Input_Manager : MonoBehaviour
     }
     #endregion
 
+    #region --- Limb Selection Controls ---
+
+    public void OnEnterLimbSelection()
+    {
+        if (combat_Mode == true)
+            combat_Mode = false;
+            
+        Switch_To_UI_Controls();
+        limb_Selection_Screen.SetActive(true);
+    }
+
+    public void OnExitLimbSelection()
+    {
+        Switch_To_Player_Controls();
+        limb_Selection_Screen.SetActive(false);
+    }
+    #endregion
+    
     #region --- Mouse Controls ---
     
     private void Get_Cursor_Position()

@@ -103,6 +103,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Enter Limb Selection",
+                    "type": "Button",
+                    "id": "217c3047-0c2a-4806-b006-1686aeeb84eb",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -501,6 +510,28 @@
                     "action": "Change Mode",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "17664fab-a58d-4b3d-ba11-25b5a7553922",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Enter Limb Selection",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0bb6040b-0776-456b-a915-e38e38757787",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Enter Limb Selection",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -602,6 +633,15 @@
                     "name": "Exit Inventory",
                     "type": "Button",
                     "id": "cbbb96f4-1c31-4542-9e2a-751abf9fef00",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Exit Limb Selection",
+                    "type": "Button",
+                    "id": "4c0a0cdd-ac1d-4164-98bf-a1512aba8a1b",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -991,6 +1031,17 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Exit Inventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "36c114c2-c24f-43b6-8d9a-1378346d0bb2",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Exit Limb Selection",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
