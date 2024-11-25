@@ -10,35 +10,38 @@ public class Inventory_Item_List : MonoBehaviour
 {
     [SerializeField] private GameObject content = default;
     [SerializeField] private GameObject menu_Item_Template = default;
-    [SerializeField] private List<Inventory_Item_Data> inventory_List = default;
+    [SerializeField] private List<object> inventory_List = default;
 
 
     private void Start()
     {
-        Populate_Inventory_Items();
+        //Populate_Inventory_Items();
     }// end Start()
 
     // Populates the list with items, only called in Awake()
+    
+    // !! Come back to when scene changes are implemented
     private void Populate_Inventory_Items()
     {
         for (int i = 0; i < inventory_List.Count; i++)
         {
-            Add_Item_To_Inventory(inventory_List[i]);
+            //Add_Item_To_Inventory(inventory_List[i]);
         }   
     }// end Populate_Inventory_Item()
 
     // Add item to the inventory list, called when picking up new item
-    private void Add_Item_To_Inventory(Inventory_Item_Data item)
+    public void Add_Item_To_Inventory(Inventory_Item_Data item_Data, GameObject item_Object)
     {
-        GameObject new_Item = Instantiate(menu_Item_Template, transform.position, transform.rotation);
+        
+        GameObject new_Item_Listing = Instantiate(menu_Item_Template, transform.position, transform.rotation);
 
-        string label = $"   {item.name}";
-        new_Item.name = label;
-        new_Item.transform.SetParent(content.transform, true);
-        new_Item.SetActive(true);
-        new_Item.GetComponentInChildren<TextMeshProUGUI>().text = label;
+        string label = $"   {item_Data.name}";
+        new_Item_Listing.name = label;
+        new_Item_Listing.transform.SetParent(content.transform, true);
+        new_Item_Listing.SetActive(true);
+        new_Item_Listing.GetComponentInChildren<TextMeshProUGUI>().text = label;
         // Reset scale because it goes weird
-        new_Item.transform.localScale = Vector3.one;
+        new_Item_Listing.transform.localScale = Vector3.one;
     }// end Add_Item_To_Inventory()
     
 }// end script

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f81ffff79bda7ce48bec63a1727d1558, type: 3}
-  m_Name: Metal Scrap Big
+  m_Name: Metal_Scrap_Big
   m_EditorClassIdentifier: 
   name: Metal Scrap Big
   item_Type: Metal Scrap
