@@ -4,10 +4,12 @@
 TagManager:
   serializedVersion: 3
   tags:
+  - Inventory
+  - World Item Container
+  - Removed Item Dispenser
   - Equipable Container
   - Hold Point
   - Holdable
-  - Inventory
   - Metal Scrap
   layers:
   - Default

@@ -32,6 +32,7 @@ Transform:
   - {fileID: 6686941015421244394}
   - {fileID: 8864842657754562518}
   - {fileID: 662619625410530228}
+  - {fileID: 4808851513429834879}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4121018325900097265
@@ -80,6 +81,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   content: {fileID: 0}
   menu_Item_Template: {fileID: 1862175030250330362, guid: 352aa10aef6ecffc6a056cfd052a9dbc, type: 3}
+--- !u!1 &6847741302277430922
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4808851513429834879}
+  m_Layer: 0
+  m_Name: World Item Container
+  m_TagString: World Item Container
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4808851513429834879
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6847741302277430922}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7880357954870218512}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8777978701525602574
 GameObject:
   m_ObjectHideFlags: 0
