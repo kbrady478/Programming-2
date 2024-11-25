@@ -56,14 +56,15 @@ public class Input_Manager : MonoBehaviour
     #region --- Inventory Controls ---
     public void OnEnterInventory()
     {
-        //print("enter");
+        if (combat_Mode == true)
+            combat_Mode = false;
+            
         Switch_To_UI_Controls();
         inventory_Screen.SetActive(true);
     }
 
     public void OnExitInventory()
     {
-        //print("exit");
         Switch_To_Player_Controls();
         inventory_Screen.SetActive(false);
     }

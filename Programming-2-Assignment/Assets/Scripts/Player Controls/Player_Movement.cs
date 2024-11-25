@@ -85,7 +85,7 @@ public class Player_Movement : MonoBehaviour
         
     }// end FixedUpdate()
     
-    #region --- Character Movement - Looting Mode ---
+    #region --- Looting Mode ---
     private void Move_Character_With_Rotation()
     {
         Vector3 direction = input_Vector.normalized;
@@ -111,18 +111,21 @@ public class Player_Movement : MonoBehaviour
     #endregion
 
     
-    #region --- Character Movement - Combat Mode ---
+    #region --- Combat Mode ---
     private void Move_Character_With_Aim()
     {
         Vector3 moveUp = new Vector3(1, 0, 1).normalized;
         if (Input.GetKey(KeyCode.W))
             rb.MovePosition(rb.position + moveUp * walk_Speed * Time.fixedDeltaTime);
+        
         Vector3 moveDown = new Vector3(-1, 0, -1).normalized;
         if (Input.GetKey(KeyCode.S))
             rb.MovePosition(rb.position + moveDown * walk_Speed * Time.fixedDeltaTime);
+        
         Vector3 moveLeft = new Vector3(-1, 0, 1).normalized;
         if (Input.GetKey(KeyCode.A))
             rb.MovePosition(rb.position + moveLeft * walk_Speed * Time.fixedDeltaTime);
+        
         Vector3 moveRight = new Vector3(1, 0, -1).normalized; 
         if (Input.GetKey(KeyCode.D))
             rb.MovePosition(rb.position + moveRight * walk_Speed * Time.fixedDeltaTime);
@@ -137,7 +140,7 @@ public class Player_Movement : MonoBehaviour
     
     public void OnJump()
     {
-        if (is_Grounded == false || can_Jump == false) return;
+        if (is_Grounded == false || can_Jump == false || input_Manager.combat_Mode == true) return;
 
         is_Jumping = true;
         can_Jump = false;

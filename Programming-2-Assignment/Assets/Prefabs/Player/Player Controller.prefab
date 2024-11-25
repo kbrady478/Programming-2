@@ -166,6 +166,11 @@ MonoBehaviour:
   input_Action_Maps: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   player_Movement_Script: {fileID: 7249413174917778793}
   inventory_Screen: {fileID: 0}
+  loot_Layer:
+    serializedVersion: 2
+    m_Bits: 256
+  loot_Check_Radius: 0.5
+  enemy_Check_Radius: 0
   combat_Mode: 0
   cursor_Position: {x: 0, y: 0, z: 0}
 --- !u!114 &7249413174917778793

@@ -33,7 +33,7 @@ RectTransform:
   m_Father: {fileID: 1611058338933977014}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -90,7 +90,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3391519094809651848
 RectTransform:
   m_ObjectHideFlags: 0
@@ -98,7 +98,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 711391449222300190}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -442,9 +442,8 @@ GameObject:
   - component: {fileID: 1362833498319436289}
   - component: {fileID: 3031781125334772626}
   - component: {fileID: 606815799727645183}
-  - component: {fileID: 620352734071249340}
   m_Layer: 5
-  m_Name: Inventory
+  m_Name: Inventory List
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -539,28 +538,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &620352734071249340
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4345706448707362008}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6be59c2970528054b0bb056504814cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  content: {fileID: 2381129323532597927}
-  menu_Item_Template: {fileID: 1862175030250330362, guid: 352aa10aef6ecffc6a056cfd052a9dbc, type: 3}
-  inventory_List:
-  - {fileID: 11400000, guid: 225cd4a962b4df7cc95c8fa592a67a1f, type: 2}
-  - {fileID: 11400000, guid: cdff5946ef1c820bab91440851a74f1b, type: 2}
-  - {fileID: 11400000, guid: cdff5946ef1c820bab91440851a74f1b, type: 2}
-  - {fileID: 11400000, guid: a9401e1d4cdf5efc1b6b7cc3b7773698, type: 2}
-  - {fileID: 11400000, guid: 225cd4a962b4df7cc95c8fa592a67a1f, type: 2}
-  - {fileID: 11400000, guid: cdff5946ef1c820bab91440851a74f1b, type: 2}
-  - {fileID: 11400000, guid: a9401e1d4cdf5efc1b6b7cc3b7773698, type: 2}
 --- !u!1 &4546241432160956680
 GameObject:
   m_ObjectHideFlags: 0
