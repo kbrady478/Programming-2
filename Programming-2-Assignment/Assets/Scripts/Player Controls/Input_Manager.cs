@@ -92,24 +92,28 @@ public class Input_Manager : MonoBehaviour
     // Left click to interact, with environment or attack
     public void OnInteract()
     {
-        print("click registered");
+        //print("click registered");
         if (combat_Mode == true) return;
 
         if (combat_Mode == false)
         {
-            Collider[] hit_Colliders = Physics.OverlapSphere(cursor_Position, loot_Check_Radius, loot_Layer);
-
-            foreach (Collider collider in hit_Colliders)
+            Collider[] max_Item_Pickup = new Collider[1];
+            if (Physics.OverlapSphereNonAlloc(cursor_Position, loot_Check_Radius, max_Item_Pickup, loot_Layer) == 1)
             {
-                if (collider.gameObject.CompareTag("Metal Scrap"))
-                {
-                    if (collider.gameObject.TryGetComponent(out IGetLoot loot_Interface))
-                    {
-                        print("attemtping to get loot");
-                        loot_Interface.Loot_Obtained();
-                    }
-                }    
+               foreach (Collider collider in max_Item_Pickup)
+               {
+                   if (collider.gameObject.CompareTag("Metal Scrap"))
+                   {
+                       if (collider.gameObject.TryGetComponent(out IGetLoot loot_Interface))
+                       {
+                           print("attemtping to get loot");
+                           loot_Interface.Loot_Obtained();
+                       }
+                   }    
+               } 
             }
+
+
         }// end pick up item
         
     }// end OnInteract()

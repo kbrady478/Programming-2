@@ -72,19 +72,21 @@ public class Inventory_Item_List : MonoBehaviour
         new_Inventory_Object.game_Object.transform.SetParent(gameObject.transform);
         new_Inventory_Object.game_Object.transform.localPosition = Vector3.zero;
         
+        // Disable physics to not fuck with spitting out on removal
         Change_Item_RigidBody_Active(new_Inventory_Object.data.place_In_Inv);
         
         // Add listing to inventory screen    
         GameObject new_Item_Listing = Instantiate(menu_Item_Template, transform.position, transform.rotation);
         menu_Item_List.Add(new_Item_Listing);
         
+        // Assign data to UI
         string label = $"   {item_Data.name}";
         new_Item_Listing.name = label;
         new_Item_Listing.transform.SetParent(content.transform, true);
         new_Item_Listing.SetActive(true);
-        
         new_Item_Listing.GetComponentInChildren<TextMeshProUGUI>().text = label;
         
+        // Assign place in list to objects removal script
         new_Item_Listing.GetComponentInChildren<Remove_From_Inventory>().position_In_List = inventory_Object_List.Count - 1;
         
         // Reset scale because it goes weird
@@ -92,6 +94,7 @@ public class Inventory_Item_List : MonoBehaviour
         
     }// end Add_Item_To_Inventory()
     
+    // Remove item, called from button in inventory UI
     public void Remove_Item_From_Inventory(int position_In_Inventory)
     {
         // Destroy listing in UI, first to stop bug where list shifts and deletes next item instead
@@ -100,7 +103,7 @@ public class Inventory_Item_List : MonoBehaviour
         // Spit item out
         Change_Item_RigidBody_Active(position_In_Inventory);
         inventory_Object_List[position_In_Inventory].game_Object.gameObject.transform.position = removed_Item_Dispenser.transform.position;
-        inventory_Object_List[position_In_Inventory].game_Object.gameObject.GetComponent<Rigidbody>().AddForce(removed_Item_Dispenser.transform.position * 1.1f, ForceMode.Impulse);
+        inventory_Object_List[position_In_Inventory].game_Object.gameObject.GetComponent<Rigidbody>().AddForce(inventory_Object_List[position_In_Inventory].game_Object.gameObject.transform.position * 1.1f, ForceMode.Impulse);
         
         // Move out of inventory back to world
         inventory_Object_List[position_In_Inventory].game_Object.transform.SetParent(world_Item_Container.transform);
@@ -117,7 +120,6 @@ public class Inventory_Item_List : MonoBehaviour
 
     private void Change_Item_RigidBody_Active(int position_In_Inventory)
     {
-        print("enter rb check");
         if (inventory_Object_List[position_In_Inventory].game_Object.gameObject.GetComponent<Rigidbody>().isKinematic == true)
             inventory_Object_List[position_In_Inventory].game_Object.gameObject.GetComponent<Rigidbody>().isKinematic = false;
         
