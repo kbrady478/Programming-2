@@ -60,6 +60,9 @@ public class Input_Manager : MonoBehaviour
         if (combat_Mode == true)
             combat_Mode = false;
             
+        if (limb_Selection_Screen.activeInHierarchy == true)
+            limb_Selection_Screen.SetActive(false);
+        
         Switch_To_UI_Controls();
         inventory_Screen.SetActive(true);
     }
@@ -78,6 +81,9 @@ public class Input_Manager : MonoBehaviour
         if (combat_Mode == true)
             combat_Mode = false;
             
+        if (inventory_Screen.activeInHierarchy == true)
+            inventory_Screen.SetActive(false);
+        
         Switch_To_UI_Controls();
         limb_Selection_Screen.SetActive(true);
     }
