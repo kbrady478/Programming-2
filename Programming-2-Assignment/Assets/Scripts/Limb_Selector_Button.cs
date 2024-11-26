@@ -30,8 +30,6 @@ public class Limb_Selector_Button : MonoBehaviour
 
     public void Equip_Limb_Trigger()
     {
-        if (limb_Equipped == true) return;
-        
         limb_Selector_Script.Equip_Limb(limb_Object, limb_Type);
     }// end Equip_Limb()
 

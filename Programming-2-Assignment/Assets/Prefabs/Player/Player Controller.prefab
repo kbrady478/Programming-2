@@ -155,9 +155,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Height: 4.8
+  m_Height: 2.8
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: -0.68, z: 0}
 --- !u!114 &2454914186881871839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,6 +203,7 @@ MonoBehaviour:
   input_Action_Maps: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   player_Movement_Script: {fileID: 7249413174917778793}
   inventory_Screen: {fileID: 0}
+  limb_Selection_Screen: {fileID: 0}
   loot_Layer:
     serializedVersion: 2
     m_Bits: 256
