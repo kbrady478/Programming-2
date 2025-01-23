@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,6 +8,7 @@ public class Input_Manager : MonoBehaviour
     [Header("General")]
     [SerializeField] private InputActionAsset input_Action_Maps;
     [SerializeField] private Player_Movement player_Movement_Script;
+    private Weapon_Manager weapon_Manager_Script;
     private InputActionMap player_Action_Map;
     private InputActionMap ui_Action_Map;
 
@@ -19,6 +21,12 @@ public class Input_Manager : MonoBehaviour
     [SerializeField] private float enemy_Check_Radius; // Essentially aim assist, accuracy will be dealt with on attack
     public bool combat_Mode = false;
     public Vector3 cursor_Position;
+
+
+    private void Start()
+    {
+        weapon_Manager_Script = GameObject.FindGameObjectWithTag("Player").GetComponent<Weapon_Manager>();
+    }
 
     private void Update()
     {
@@ -114,12 +122,16 @@ public class Input_Manager : MonoBehaviour
         combat_Mode = !combat_Mode;
     }// end OnChangeMode()
 
-    // Left click to interact, with environment or attack
+    
+    // Left click to interact with environment or attack
     public void OnInteract()
     {
-        //print("click registered");
-        if (combat_Mode == true) return;
+        
+        if (combat_Mode == true) 
+            weapon_Manager_Script.Attack_Input();
 
+        
+        
         if (combat_Mode == false)
         {
             Collider[] max_Item_Pickup = new Collider[1];
@@ -137,7 +149,6 @@ public class Input_Manager : MonoBehaviour
                    }    
                } 
             }
-
 
         }// end pick up item
         
