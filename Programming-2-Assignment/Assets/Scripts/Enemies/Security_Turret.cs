@@ -20,11 +20,6 @@ public class Security_Turret : MonoBehaviour
     [SerializeField] private float projectile_Upward_Force;
     private bool enemy_In_Range;
     
-    
-    private void Update()
-    {
-
-    }// end Update()
 
     private IEnumerator Follow_Target()
     {

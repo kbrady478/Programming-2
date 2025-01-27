@@ -30,6 +30,7 @@ public class Grenade_Projectile : MonoBehaviour
     private void Explode()
     {
         print("boom");
+        remaining_Bounces = 1;
         Destroy(gameObject);
     }// end Explode()
     
