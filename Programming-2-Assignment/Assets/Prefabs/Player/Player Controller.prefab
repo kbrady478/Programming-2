@@ -82,6 +82,7 @@ GameObject:
   - component: {fileID: 2454914186881871839}
   - component: {fileID: 4676862215245490891}
   - component: {fileID: 7249413174917778793}
+  - component: {fileID: 3947686112621120417}
   m_Layer: 7
   m_Name: Player Controller
   m_TagString: Player
@@ -237,6 +238,20 @@ MonoBehaviour:
   is_Jumping: 0
   is_Grounded: 0
   can_Jump: 1
+--- !u!114 &3947686112621120417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3073368720421998542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4d683b10985e9314afbe121b26af5f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  max_Health: 100
+  current_Health: 0
 --- !u!1 &3857154523997907997
 GameObject:
   m_ObjectHideFlags: 0
