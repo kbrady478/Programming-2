@@ -12,10 +12,11 @@ public class Player_Movement : MonoBehaviour
     [SerializeField] private Rigidbody rb;
     private InputSystem_Actions input_System;
     private Vector3 input_Vector;
+    private Animator animator;
     
     [Header("Walk Speeds")]
-    [SerializeField] private float walk_Speed;
-    [SerializeField] private float turn_Speed;
+    //[SerializeField] private float walk_Speed;
+    //[SerializeField] private float turn_Speed;
     
     [Header("Jumping")] 
     [SerializeField] private float jump_Force;
@@ -30,6 +31,7 @@ public class Player_Movement : MonoBehaviour
     [SerializeField] private bool is_Jumping;
     [SerializeField] private bool is_Grounded = false;
     [SerializeField] private bool can_Jump = true;
+    
     
     
     #region --- Input System ---
@@ -55,37 +57,56 @@ public class Player_Movement : MonoBehaviour
     }// end Take_Input()    
     
     #endregion
-    
-    
+
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+    }// end Start()
+
     private void FixedUpdate()
     {
         is_Grounded = Physics.CheckSphere(ground_Check_Pos.position, ground_Check_Radius, ground_Layer);
         
         // Reset jump
-        if (is_Jumping && is_Grounded && can_Jump)
-            is_Jumping = false;
+        //if (is_Grounded)
+        animator.SetBool("is_Jumping", false);
         
         Take_Input();
 
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            print("throw");
+            animator.SetBool("is_Throwing", true);
+            print(animator.GetBool("is_Throwing"));
+            Invoke("Reset_Throw", 0.25f);
+        }
+        /*
         // Restrict movement in jumping, will make more sense with animation later
         if (is_Jumping) return;
+        */
         
+        animator.SetFloat("Vert Input", Input.GetAxisRaw("Vertical"));
+        animator.SetFloat("Hor Input", Input.GetAxisRaw("Horizontal"));
+        
+        
+        /*
         // Rotate character with movement direction when not in combat
         if (input_Manager.combat_Mode == false)
         {
-            Rotate_Character_With_Movement();
-            Move_Character_With_Rotation();
+            //Rotate_Character_With_Movement();
+            //Move_Character_With_Rotation();
         }    
         // else aim at cursor 
         else if (input_Manager.combat_Mode == true)
         {
             Rotate_Character_With_Aim(input_Manager.cursor_Position);
-            Move_Character_With_Aim();
+            //Move_Character_With_Aim();
         }
-        
+        */
     }// end FixedUpdate()
     
     #region --- Looting Mode ---
+    /*
     private void Move_Character_With_Rotation()
     {
         Vector3 direction = input_Vector.normalized;
@@ -108,10 +129,11 @@ public class Player_Movement : MonoBehaviour
         Quaternion current_Rotation = Quaternion.LookRotation(skewed_Input, Vector3.up);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, current_Rotation, turn_Speed * Time.deltaTime );
     }// end Rotate_Character_With_Movement()
+    */
     #endregion
-
     
     #region --- Combat Mode ---
+    /*
     private void Move_Character_With_Aim()
     {
         Vector3 moveUp = new Vector3(1, 0, 1).normalized;
@@ -130,7 +152,7 @@ public class Player_Movement : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
             rb.MovePosition(rb.position + moveRight * walk_Speed * Time.fixedDeltaTime);
     }// end Move_Character_With_Aim()
-    
+    */
     private void Rotate_Character_With_Aim(Vector3 target)
     {
         gameObject.transform.LookAt(target);
@@ -140,15 +162,7 @@ public class Player_Movement : MonoBehaviour
     
     public void OnJump()
     {
-        if (is_Grounded == false || can_Jump == false || input_Manager.combat_Mode == true) return;
-
-        is_Jumping = true;
-        can_Jump = false;
-        
-        Invoke("Reset_Jump", jump_Cooldown);
-        
-        rb.AddForce(jump_Force * Vector3.up, ForceMode.Impulse);
-        rb.AddForce((jump_Force * 1.5f) * gameObject.transform.forward, ForceMode.Impulse);
+        animator.SetBool("is_Jumping", true);
     }// end OnJump()
 
     
@@ -156,5 +170,10 @@ public class Player_Movement : MonoBehaviour
     {
         can_Jump = true;
     }// end Reset_Jump()
-    
+
+
+    private void Reset_Throw()
+    {
+        animator.SetBool("is_Throwing", false);
+    }
 }// end script
