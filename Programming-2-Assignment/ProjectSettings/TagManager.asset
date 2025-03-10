@@ -17,6 +17,9 @@ TagManager:
   - Metal Scrap
   - Holdable
   - Hold Point
+  - Equipable Container
+  - Enemy
+  - Enemy Projectile
   layers:
   - Default
   - TransparentFX
@@ -28,7 +31,7 @@ TagManager:
   - Player
   - Loot
   - Environment
-  - 
+  - Enemy
   - 
   - 
   - 

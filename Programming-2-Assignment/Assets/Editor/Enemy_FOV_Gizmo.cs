@@ -6,27 +6,28 @@ using UnityEngine;
 [CustomEditor(typeof(Enemy_FOV))]
 public class Enemy_FOV_Gizmo : Editor
 {
+    
     private void OnSceneGUI()
     {
         Enemy_FOV fov = (Enemy_FOV)target; 
         
         // Draw detection sphere range
         Handles.color = Color.white;
-        Handles.DrawWireArc(fov.transform.position, Vector3.up, Vector3.forward, 360, fov.radius);
+        Handles.DrawWireArc(fov.transform.position, Vector3.up, Vector3.forward, 360, fov.FOV_Radius);
 
         // Calculate both sides of the view cone
-        Vector3 view_Angle_Left = Direction_From_Angle(fov.transform.eulerAngles.y, -fov.angle / 2);
-        Vector3 view_Angle_Right = Direction_From_Angle(fov.transform.eulerAngles.y, fov.angle / 2);
+        Vector3 view_Angle_Left = Direction_From_Angle(fov.transform.eulerAngles.y, -fov.FOV_Angle / 2);
+        Vector3 view_Angle_Right = Direction_From_Angle(fov.transform.eulerAngles.y, fov.FOV_Angle / 2);
         
         // Draw view cone
         Handles.color = Color.yellow;
-        Handles.DrawLine(fov.transform.position, fov.transform.position + view_Angle_Left * fov.radius);
-        Handles.DrawLine(fov.transform.position, fov.transform.position + view_Angle_Right * fov.radius);
+        Handles.DrawLine(fov.transform.position, fov.transform.position + view_Angle_Left * fov.FOV_Radius);
+        Handles.DrawLine(fov.transform.position, fov.transform.position + view_Angle_Right * fov.FOV_Radius);
 
-        if (fov.entity_Visible)
+        if (fov.player_Visible)
         {
             Handles.color = Color.green;
-            Handles.DrawLine(fov.transform.position, fov.entity_Object.transform.position);
+            Handles.DrawLine(fov.transform.position, fov.player_Ref.transform.position);
         }
     }// end OnSceneGUI()
 
