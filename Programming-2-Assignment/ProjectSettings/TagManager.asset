@@ -20,6 +20,7 @@ TagManager:
   - Equipable Container
   - Enemy
   - Enemy Projectile
+  - Save Controller
   layers:
   - Default
   - TransparentFX

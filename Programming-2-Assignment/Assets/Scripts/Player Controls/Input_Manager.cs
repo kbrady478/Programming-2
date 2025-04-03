@@ -5,10 +5,11 @@ using UnityEngine.InputSystem;
 
 public class Input_Manager : MonoBehaviour
 {
-    [Header("General")]
+    [Header("References")]
     [SerializeField] private InputActionAsset input_Action_Maps;
     [SerializeField] private Player_Movement player_Movement_Script;
     private Weapon_Manager weapon_Manager_Script;
+    private Save_System save_System_Script;
     private InputActionMap player_Action_Map;
     private InputActionMap ui_Action_Map;
 
@@ -26,6 +27,7 @@ public class Input_Manager : MonoBehaviour
     private void Start()
     {
         weapon_Manager_Script = GameObject.FindGameObjectWithTag("Player").GetComponent<Weapon_Manager>();
+        save_System_Script = GameObject.FindGameObjectWithTag("Save Controller").GetComponent<Save_System>();
     }
 
     private void Update()
@@ -153,6 +155,20 @@ public class Input_Manager : MonoBehaviour
         }// end pick up item
         
     }// end OnInteract()
+    #endregion
+    
+    #region --- Save & Load ---
+
+    public void OnSave()
+    {
+        save_System_Script.Save_Data();
+    }// end OnSave()
+
+    public void OnLoad()
+    {
+        save_System_Script.Load_Data();
+    }// end OnLoad()
+    
     #endregion
     
 }// end Input_Manager

@@ -31,7 +31,9 @@ public class Player_Movement : MonoBehaviour
     [SerializeField] private bool is_Jumping;
     [SerializeField] private bool is_Grounded = false;
     [SerializeField] private bool can_Jump = true;
-    
+
+    [Header("Save Data")] 
+    public Player_Movement_Data_Struct player_Movement_Data;
     
     
     #region --- Input System ---
@@ -61,10 +63,14 @@ public class Player_Movement : MonoBehaviour
     private void Start()
     {
         animator = GetComponent<Animator>();
+        player_Movement_Data = new Player_Movement_Data_Struct();
     }// end Start()
 
     private void FixedUpdate()
     {
+        // Update location for save data
+        player_Movement_Data.Position = transform.position;
+        
         is_Grounded = Physics.CheckSphere(ground_Check_Pos.position, ground_Check_Radius, ground_Layer);
         
         // Reset jump
@@ -176,4 +182,12 @@ public class Player_Movement : MonoBehaviour
     {
         animator.SetBool("is_Throwing", false);
     }
-}// end script
+    
+    
+}// end Player_Movement
+
+[Serializable]
+public struct Player_Movement_Data_Struct
+{
+    public Vector3 Position;
+}
