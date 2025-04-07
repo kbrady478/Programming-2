@@ -10,7 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f81ffff79bda7ce48bec63a1727d1558, type: 3}
-  m_Name: Test Item 1
+  m_Name: Metal Scrap Big
   m_EditorClassIdentifier: 
-  name: 
-  item_Type: 
+  name: Metal Scrap Big
+  item_Type: Metal Scrap
+  place_In_Inv: 0
+  value: 5

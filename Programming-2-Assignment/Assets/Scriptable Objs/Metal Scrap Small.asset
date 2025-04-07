@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Metal Scrap Small
   item_Type: Metal Scrap
+  place_In_Inv: 1
+  value: 1

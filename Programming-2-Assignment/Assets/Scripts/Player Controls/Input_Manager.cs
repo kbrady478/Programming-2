@@ -1,4 +1,5 @@
 using System;
+using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -52,12 +53,16 @@ public class Input_Manager : MonoBehaviour
     #region --- Switch Control Scheme ---
     private void Switch_To_Player_Controls()
     {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         ui_Action_Map.Disable();
         player_Action_Map.Enable();
     }// end Switch_To_Player_Controls()
 
     private void Switch_To_UI_Controls()
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
         player_Action_Map.Disable();
         ui_Action_Map.Enable();
     }// end Switch_To_UI_Controls()
@@ -137,7 +142,8 @@ public class Input_Manager : MonoBehaviour
         if (combat_Mode == false)
         {
             Collider[] max_Item_Pickup = new Collider[1];
-            if (Physics.OverlapSphereNonAlloc(cursor_Position, loot_Check_Radius, max_Item_Pickup, loot_Layer) == 1)
+            // Change transform.position back to cursor when backtracking
+            if (Physics.OverlapSphereNonAlloc(transform.position, loot_Check_Radius, max_Item_Pickup, loot_Layer) == 1)
             {
                foreach (Collider collider in max_Item_Pickup)
                {

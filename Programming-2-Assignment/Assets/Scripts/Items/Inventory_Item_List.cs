@@ -10,6 +10,13 @@ public struct Inventory_Object
     public GameObject game_Object;
 }
 
+public struct Inventory_Data_Struct
+{
+    public float currency_Amount;
+    public List<Inventory_Object> inventory_Object_List;
+    public List<GameObject> inventory_Menu_List;
+}
+
 public class Inventory_Item_List : MonoBehaviour
 {
     [SerializeField] private GameObject content;
@@ -19,22 +26,18 @@ public class Inventory_Item_List : MonoBehaviour
     private GameObject world_Item_Container;
     private GameObject removed_Item_Dispenser;
     
+    [Header("Save Data")]
+    public Inventory_Data_Struct inventory_Data;
+    
+    [SerializeField] private TextMeshProUGUI currency_Count;
+    public float currency_Amount;
+    
     private void Start()
     {
         world_Item_Container = GameObject.FindWithTag("World Item Container");
         removed_Item_Dispenser = GameObject.FindWithTag("Removed Item Dispenser");
+        inventory_Data = new Inventory_Data_Struct();
     }// end Start()
-
-    // Populates the list with items, only called in Awake()
-    
-    // !! Come back to when scene changes are implemented
-    private void Populate_Inventory_Items()
-    {
-        for (int i = 0; i < inventory_Object_List.Count; i++)
-        {
-            //Add_Item_To_Inventory(inventory_Object_List[i]);
-        }   
-    }// end Populate_Inventory_Item()
 
     private void Update()
     {
@@ -48,15 +51,19 @@ public class Inventory_Item_List : MonoBehaviour
                 if (menu_Item_List[i].gameObject.GetComponentInChildren<Remove_From_Inventory>() == null) return;
                 Debug.Log(inventory_Object_List[i].data.name);
                 Debug.Log(menu_Item_List[i].gameObject.GetComponentInChildren<Remove_From_Inventory>().position_In_List);
+                
             } 
+            
+            Update_Save_Data();
         }
         
+        currency_Count.SetText($"C: {currency_Amount}");
     }
 
     // Add item to the inventory list, called when picking up new item
     public void Add_Item_To_Inventory(Inventory_Item_Data item_Data, GameObject item_Object)
     {
-        // Assign item data and transform to struct
+        // Assign item DataStruct and transform to struct
         Inventory_Object new_Inventory_Object = new Inventory_Object();
         
         new_Inventory_Object.data = item_Data;
@@ -79,7 +86,7 @@ public class Inventory_Item_List : MonoBehaviour
         GameObject new_Item_Listing = Instantiate(menu_Item_Template, transform.position, transform.rotation);
         menu_Item_List.Add(new_Item_Listing);
         
-        // Assign data to UI
+        // Assign DataStruct to UI
         string label = $"   {item_Data.name}";
         new_Item_Listing.name = label;
         new_Item_Listing.transform.SetParent(content.transform, true);
@@ -92,6 +99,10 @@ public class Inventory_Item_List : MonoBehaviour
         // Reset scale because it goes weird
         new_Item_Listing.transform.localScale = Vector3.one;
         
+        // Add currency
+        currency_Amount = currency_Amount + item_Data.value;
+        
+        Update_Save_Data();
     }// end Add_Item_To_Inventory()
     
     // Remove item, called from button in inventory UI
@@ -116,6 +127,7 @@ public class Inventory_Item_List : MonoBehaviour
         for (int i = position_In_Inventory; i < inventory_Object_List.Count; i++)
             menu_Item_List[i].gameObject.GetComponentInChildren<Remove_From_Inventory>().position_In_List -= 1;
         
+        Update_Save_Data();
     }// end Remove_Item_From_Inventory()
 
     private void Change_Item_RigidBody_Active(int position_In_Inventory)
@@ -126,6 +138,13 @@ public class Inventory_Item_List : MonoBehaviour
         else if (inventory_Object_List[position_In_Inventory].game_Object.gameObject.GetComponent<Rigidbody>().isKinematic == false)
             inventory_Object_List[position_In_Inventory].game_Object.gameObject.GetComponent<Rigidbody>().isKinematic = true;
     }// end Change_Item_Rigidbody_Active()
-    
+
+
+    private void Update_Save_Data()
+    {
+        inventory_Data.currency_Amount = currency_Amount;
+        inventory_Data.inventory_Object_List = inventory_Object_List;
+        inventory_Data.inventory_Menu_List = menu_Item_List;
+    }// end Update_Save_Data
     
 }// end script

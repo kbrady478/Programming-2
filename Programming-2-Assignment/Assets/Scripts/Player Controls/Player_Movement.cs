@@ -68,7 +68,7 @@ public class Player_Movement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Update location for save data
+        // Update location for save DataStruct
         player_Movement_Data.Position = transform.position;
         
         is_Grounded = Physics.CheckSphere(ground_Check_Pos.position, ground_Check_Radius, ground_Layer);
