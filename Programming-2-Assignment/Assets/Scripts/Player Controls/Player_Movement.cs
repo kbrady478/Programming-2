@@ -10,9 +10,11 @@ public class Player_Movement : MonoBehaviour
     [Header("General")] 
     [SerializeField] private Input_Manager input_Manager;
     [SerializeField] private Rigidbody rb;
+    [SerializeField] private GameObject cam;
     private InputSystem_Actions input_System;
     private Vector3 input_Vector;
     private Animator animator;
+    
     
     [Header("Walk Speeds")]
     //[SerializeField] private float walk_Speed;
@@ -73,6 +75,8 @@ public class Player_Movement : MonoBehaviour
         
         is_Grounded = Physics.CheckSphere(ground_Check_Pos.position, ground_Check_Radius, ground_Layer);
         
+        transform.forward = new Vector3(cam.transform.forward.x, 0, cam.transform.forward.z);
+        
         // Reset jump
         //if (is_Grounded)
         animator.SetBool("is_Jumping", false);
@@ -93,7 +97,6 @@ public class Player_Movement : MonoBehaviour
         
         animator.SetFloat("Vert Input", Input.GetAxisRaw("Vertical"));
         animator.SetFloat("Hor Input", Input.GetAxisRaw("Horizontal"));
-        
         
         /*
         // Rotate character with movement direction when not in combat
