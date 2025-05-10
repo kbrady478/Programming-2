@@ -1,7 +1,8 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class Player_Status : MonoBehaviour
+public class Player_Status : MonoBehaviour, IEnemy_Damage
 {
     [Header("General")]
     [SerializeField] private int max_Health;
@@ -19,12 +20,22 @@ public class Player_Status : MonoBehaviour
         Update_Health();
     }// end Take_Damage()
 
+    private void Update()
+    {
+        if (current_Health <= 0)
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
     private void Update_Health()
     {
-        
+
         print(current_Health);
         
     }// end Update_Health()
-    
+
+    public void Recieve_Enemy_Rifle_Damage()
+    {
+        current_Health -= 15;
+    }
 
 }// end Player_Status

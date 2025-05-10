@@ -21,6 +21,8 @@ TagManager:
   - Enemy
   - Enemy Projectile
   - Save Controller
+  - Burst Projectile
+  - Player Rifle
   layers:
   - Default
   - TransparentFX

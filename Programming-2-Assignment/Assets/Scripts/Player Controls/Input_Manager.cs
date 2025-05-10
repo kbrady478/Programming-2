@@ -9,6 +9,8 @@ public class Input_Manager : MonoBehaviour
     [Header("References")]
     [SerializeField] private InputActionAsset input_Action_Maps;
     [SerializeField] private Player_Movement player_Movement_Script;
+    [SerializeField] private Burst_RIfle rifle_Script;
+    [SerializeField] private Animator animator;
     private Weapon_Manager weapon_Manager_Script;
     private Save_System save_System_Script;
     private InputActionMap player_Action_Map;
@@ -129,36 +131,43 @@ public class Input_Manager : MonoBehaviour
         combat_Mode = !combat_Mode;
     }// end OnChangeMode()
 
+
+    public void OnShoot()
+    {
+        animator.SetBool("is_Shooting", true);
+        rifle_Script.Shoot_Projectile();
+    }
     
     // Left click to interact with environment or attack
     public void OnInteract()
     {
+
         
+        
+        // For use when game was isometric
+        /*
         if (combat_Mode == true) 
             weapon_Manager_Script.Attack_Input();
+        */
 
-        
-        
-        if (combat_Mode == false)
+        print("attempting pickup");
+        Collider[] max_Item_Pickup = new Collider[1];
+        // Change transform.position back to cursor when backtracking
+        if (Physics.OverlapSphereNonAlloc(transform.position, loot_Check_Radius, max_Item_Pickup, loot_Layer) == 1)
         {
-            Collider[] max_Item_Pickup = new Collider[1];
-            // Change transform.position back to cursor when backtracking
-            if (Physics.OverlapSphereNonAlloc(transform.position, loot_Check_Radius, max_Item_Pickup, loot_Layer) == 1)
-            {
-               foreach (Collider collider in max_Item_Pickup)
+           foreach (Collider collider in max_Item_Pickup)
+           {
+               if (collider.gameObject.CompareTag("Metal Scrap"))
                {
-                   if (collider.gameObject.CompareTag("Metal Scrap"))
+                   if (collider.gameObject.TryGetComponent(out IGetLoot loot_Interface))
                    {
-                       if (collider.gameObject.TryGetComponent(out IGetLoot loot_Interface))
-                       {
-                           print("attemtping to get loot");
-                           loot_Interface.Loot_Obtained();
-                       }
-                   }    
-               } 
-            }
-
-        }// end pick up item
+                       print("attemtping to get loot");
+                       loot_Interface.Loot_Obtained();
+                   }
+               }    
+           } 
+        }
+            
         
     }// end OnInteract()
     #endregion

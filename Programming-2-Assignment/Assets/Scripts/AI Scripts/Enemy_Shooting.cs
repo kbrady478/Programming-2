@@ -1,13 +1,15 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Serialization;
 
 public class Enemy_Shooting : MonoBehaviour
 {
     [Header("General")] 
     [SerializeField] private GameObject view_Point;
 
+   
     [Header("Burst Rifle")] 
-    [SerializeField] private GameObject burst_Rifle_Projectile_Prefab;
+    [SerializeField] private GameObject rifle_Projectile_Prefab;
     [SerializeField] private GameObject muzzle_Flash;
     [SerializeField] private AudioSource audio_Source;
     [SerializeField] private AudioClip audio_Clip;
@@ -52,7 +54,7 @@ public class Enemy_Shooting : MonoBehaviour
         // Calculate direction
         Vector3 projectile_Direction = target_Point - bullet_Spawn.position;
         
-        GameObject projectile = Instantiate(burst_Rifle_Projectile_Prefab, bullet_Spawn.position, Quaternion.identity);
+        GameObject projectile = Instantiate(rifle_Projectile_Prefab, bullet_Spawn.position, Quaternion.identity);
         projectile.transform.forward = projectile_Direction.normalized;
         projectile.GetComponent<Rigidbody>().AddForce(projectile_Direction.normalized * bullet_Force);
     }// end Shoot_Projectile()
