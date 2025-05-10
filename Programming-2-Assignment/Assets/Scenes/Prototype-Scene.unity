@@ -11738,6 +11738,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7249413174917778793, guid: f4dc60db780f65486a30c35a2b0c3e1a, type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 676480669}
     - target: {fileID: 8091183846021790638, guid: f4dc60db780f65486a30c35a2b0c3e1a, type: 3}
       propertyPath: m_Mass
       value: 15
